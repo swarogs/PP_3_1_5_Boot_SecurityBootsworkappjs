@@ -1,19 +1,12 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Entity
 @Table
-public class User implements UserDetails {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,12 +29,12 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn (name="user_id"),
             inverseJoinColumns = @JoinColumn (name="role_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String name, String lastName,  String login, String password, List<Role> roles) {
+    public User(String name, String lastName,  String login, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.login = login;
@@ -74,11 +67,11 @@ public class User implements UserDetails {
     }
 
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -93,6 +86,8 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getPassword() {return  password; }
 
     @Override
     public String toString() {
@@ -118,39 +113,5 @@ public class User implements UserDetails {
         return Objects.hash(id, name, lastName, login, roles);
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return login;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
 }

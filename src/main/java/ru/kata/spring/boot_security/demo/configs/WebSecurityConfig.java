@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.kata.spring.boot_security.demo.security.DaoUserDetails;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.util.Optional;
@@ -19,10 +20,10 @@ import java.util.Optional;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SuccessUserHandler successUserHandler;
-    private final UserServiceImpl userService;
+    private final DaoUserDetails userService;
 
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl userService) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, DaoUserDetails userService) {
         this.successUserHandler = successUserHandler;
         this.userService = userService;
     }
@@ -52,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(
-                username -> Optional.of(userService.findUserByLogin(username))
+                username -> Optional.of(userService.loadUserByUsername(username))
                         .orElseThrow(() -> new UsernameNotFoundException("User not found"))
         ).passwordEncoder(getPasswordEncoder());
     }

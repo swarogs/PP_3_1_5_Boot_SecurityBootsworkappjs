@@ -30,19 +30,19 @@ public class AuthController {
     }
 
     @GetMapping("/admin")
-    public String allUsersPage(Model model) {
+    public String GetAllUsersPage(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
     @GetMapping("/admin/show")
-    public String userById(@RequestParam("id") Long id, Model model) {
+    public String GetUserById(@RequestParam("id") Long id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "user";
     }
 
     @GetMapping("/admin/new")
-    public String newUser(Model model) {
+    public String creatUserFrom(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getListOfRoles());
         return "new";

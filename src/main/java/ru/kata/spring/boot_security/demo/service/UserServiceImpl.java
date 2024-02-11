@@ -20,34 +20,34 @@ public class UserServiceImpl implements UserService  {
         this.userRepo = userRepo;
     }
 
-//    @Override
+ @Override
     public void addUser(User user) {
         userRepo.save(user);
     }
 
-//    @Override
+ @Override
     @Transactional(readOnly = true)
     public User findUserById(Long id) {
         return userRepo.getById(id);
     }
 
-//    @Override
+ @Override
     @Transactional(readOnly = true)
     public User findUserByLogin(String login) {
         return userRepo.findByLogin(login);
     }
 
-//    @Override
+ @Override
     public void editUserById(User user) {
         userRepo.save(user);
     }
 
-//    @Override
+ @Override
     public void removeUserById(Long id) {
         userRepo.deleteById(id);
     }
 
-//    @Override
+ @Override
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userRepo.findAll();

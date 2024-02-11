@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table
-public class Role implements GrantedAuthority {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,10 +43,7 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    @Override
-    public String getAuthority() {
-        return role;
-    }
+
 
     @Override
     public String toString() {
