@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,31 +17,30 @@ import javax.validation.Valid;
 @Controller
 public class AuthController {
 
+
     private final UserServiceImpl userService;
     private final RoleServiceImpl roleService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthController(UserServiceImpl userService, RoleServiceImpl roleService, PasswordEncoder passwordEncoder) {
+    public AuthController(UserServiceImpl userService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/admin")
-    public String GetAllUsersPage(Model model) {
+    public String getAllUsersPage(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
     @GetMapping("/admin/show")
-    public String GetUserById(@RequestParam("id") Long id, Model model) {
+    public String getUserById(@RequestParam("id") Long id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "user";
     }
 
     @GetMapping("/admin/new")
-    public String creatUserFrom(Model model) {
+    public String createUserFrom(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getListOfRoles());
         return "new";
@@ -56,7 +54,7 @@ public class AuthController {
             model.addAttribute("roles", roleService.getListOfRoles());
             return "new";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         userService.addUser(user);
         return "redirect:/admin";
     }
@@ -76,7 +74,7 @@ public class AuthController {
             model.addAttribute("roles", roleService.getListOfRoles());
             return "edit";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         userService.editUserById(user);
         return "redirect:/admin";
     }

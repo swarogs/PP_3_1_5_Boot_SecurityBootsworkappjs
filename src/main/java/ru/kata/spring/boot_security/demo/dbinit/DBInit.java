@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.Dbinit;
+package ru.kata.spring.boot_security.demo.dbinit;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +30,9 @@ public class DBInit {
         roleService.addRole(adminRole);
         roleService.addRole(userRole);
 
-        userService.addUser(new User("Anastasiya", "Votikova", "anastas", "$2a$10$nOfZFe84aXdvi599cUraOuP7wCszxrF161qPz1WwTxL65A/FlZolq", Set.of(adminRole)));
+        userService.addUser(new User("Anastasiya", "Votikova", "anastas", "1234", Set.of(adminRole)));
 
-        userService.addUser(new User("Veronika", "Nikishina", "vernik", "$2a$10$XbSWcIyrf5EBdhX0EF5L6.H4EAJlatDxJrZKd49eJ32M83gZuV9Ki", Set.of(userRole)));
+        userService.addUser(new User("Veronika", "Nikishina", "vernik", "102030", Set.of(userRole)));
 
 
     }
