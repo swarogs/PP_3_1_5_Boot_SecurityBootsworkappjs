@@ -13,8 +13,8 @@ import java.util.Set;
 
 @Component
 public class DBInit {
-    private UserServiceImpl userService;
-    private RoleServiceImpl roleService;
+    private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
 
     @Autowired
     public DBInit(UserServiceImpl userService, RoleServiceImpl roleService) {

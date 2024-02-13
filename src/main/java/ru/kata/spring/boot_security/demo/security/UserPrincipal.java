@@ -16,10 +16,12 @@ public class UserPrincipal implements UserDetails, GrantedAuthority {
     public UserPrincipal(User user) {
         this.user = user;
     }
+
     @Override
     public String getAuthority() {
         return role.getRole();
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());

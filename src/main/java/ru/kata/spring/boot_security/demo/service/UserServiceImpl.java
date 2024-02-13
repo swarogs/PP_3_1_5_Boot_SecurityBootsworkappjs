@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService  {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepo;
 
@@ -26,37 +26,37 @@ public class UserServiceImpl implements UserService  {
         this.roleService = roleService;
     }
 
- @Override
+    @Override
     public void addUser(User user) {
-     user.setPassword(passwordEncoder.encode(user.getPassword()));
-     userRepo.save(user);
- }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
+    }
 
- @Override
- @Transactional(readOnly = true)
+    @Override
+    @Transactional(readOnly = true)
     public User findUserById(Long id) {
         return userRepo.getById(id);
     }
 
- @Override
- @Transactional(readOnly = true)
+    @Override
+    @Transactional(readOnly = true)
     public User findUserByLogin(String login) {
         return userRepo.findByLogin(login);
     }
 
- @Override
+    @Override
     public void editUserById(User user) {
-     user.setPassword(passwordEncoder.encode(user.getPassword()));
-     userRepo.save(user);
- }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
+    }
 
- @Override
- public void removeUserById(Long id) {
+    @Override
+    public void removeUserById(Long id) {
         userRepo.deleteById(id);
     }
 
- @Override
- @Transactional(readOnly = true)
+    @Override
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userRepo.findAll();
     }

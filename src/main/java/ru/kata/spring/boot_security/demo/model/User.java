@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class User  {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,15 +26,15 @@ public class User  {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
-            joinColumns = @JoinColumn (name="user_id"),
-            inverseJoinColumns = @JoinColumn (name="role_id")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String name, String lastName,  String login, String password, Set<Role> roles) {
+    public User(String name, String lastName, String login, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.login = login;
@@ -83,11 +83,13 @@ public class User  {
         this.login = login;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getPassword() {return  password; }
 
     @Override
     public String toString() {
@@ -105,7 +107,7 @@ public class User  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id  && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(login, user.login) && Objects.equals(roles, user.roles);
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(login, user.login) && Objects.equals(roles, user.roles);
     }
 
     @Override
