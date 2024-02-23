@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,56 +10,50 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 
-
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
-
-    private final UserRepository userRepo;
-
-    private final RoleServiceImpl roleService;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder,
-                           RoleServiceImpl roleService) {
-        this.userRepo = userRepository;
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.roleService = roleService;
     }
 
     @Override
-    public void addUser(User user) {
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getById(Long id) {
+        return userRepository.getById(id);
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    @Transactional
+    public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
+        userRepository.save(user);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public User findUserById(Long id) {
-        return userRepo.getById(id);
+    @Transactional
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public User findUserByLogin(String login) {
-        return userRepo.findByLogin(login);
-    }
-
-    @Override
-    public void editUserById(User user) {
+    @Transactional
+    public void update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
-    }
-
-    @Override
-    public void removeUserById(Long id) {
-        userRepo.deleteById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+        userRepository.save(user);
     }
 }

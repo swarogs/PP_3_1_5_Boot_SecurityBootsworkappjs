@@ -34,7 +34,7 @@ public class UserPrincipal implements UserDetails, GrantedAuthority {
 
     @Override
     public String getUsername() {
-        return user.getLogin();
+        return user.getEmail();
     }
 
     @Override

@@ -15,11 +15,12 @@ public class DaoUserDetails implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByLogin(username);
+    public UserDetails loadUserByUsername(String email) {
+        User user = userRepository.findByUsername(email);
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
         return new UserPrincipal(user);
     }
+
 }
