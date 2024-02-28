@@ -24,15 +24,15 @@ public class AuthController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> showUsers() {
-
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<User>> printUsers() {
+        List<User> userList = userService.findAll();
+        return ResponseEntity.ok(userList);
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PostMapping("/user")
@@ -45,7 +45,7 @@ public class AuthController {
     @PatchMapping("/user/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody @Valid User user) {
         userService.update(id, user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @DeleteMapping("/user/{id}")
